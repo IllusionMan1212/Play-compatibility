@@ -123,17 +123,63 @@
         <table style="width:100%; padding:0px; margin-bottom:100px; border-collapse:collapse;border:0px">
             <tbody>
                 <tr>
-                    <td style="padding:0px 0px 0px 0px;width:148px; height:30px; background-image: url(img/play-left.png)"></td>
+                    <td style="padding:0px 0px 0px 0px;background-image: url(img/play-left.png); width:148px; height:30px"></td>
                     <td style="padding:0px 0px 0px 0px;background-image: url(img/play-center.png)"></td>
-                    <td style="padding:0px 0px 0px 0px;background-image:url(img/play-right.png); width:57px;height:62px"></td>
+                    <td style="padding:0px 0px 0px 0px;background-image: url(img/play-right.png); width:57px;height:62px"></td>
                 </tr>
             </tbody>
         </table>
+        
+        <!-- Script for searching using Names-->
+        <script>
+                function myFunction() {
+                  var input, filter, table, tr, td, i;
+                  input = document.getElementById("myInput");
+                  filter = input.value.toUpperCase();
+                  table = document.getElementById("myTable");
+                  tr = table.getElementsByTagName("tr");
+                  for (i = 0; i < tr.length; i++) {
+                    td = tr[i].getElementsByTagName("td")[0];
+                    if (td) {
+                      if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                      } else {
+                        tr[i].style.display = "none";
+                      }
+                    }       
+                  }
+                }
+        </script>
+        <!-- Script for searching using Status -->
+                <script>
+                        function myFunction2() {
+                          var input, filter, table, tr, td, i;
+                          input = document.getElementById("myInput2");
+                          filter = input.value.toUpperCase();
+                          table = document.getElementById("myTable");
+                          tr = table.getElementsByTagName("tr");
+                          for (i = 0; i < tr.length; i++) {
+                            td = tr[i].getElementsByTagName("td")[1];
+                            if (td) {
+                              if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                                tr[i].style.display = "";
+                              } else {
+                                tr[i].style.display = "none";
+                              }
+                            }       
+                          }
+                        }
+                </script>
+                <!-- Search bar for searching using Status-->
 
+    <input id="myInput2" onkeyup="myFunction2()" style="width:50%; margin-left:25%; margin-right:25%; margin-bottom:15px; border-radius: 40px; padding:11px" placeholder="Search by Status">
+                
+                <!-- Search bar for searching using Names-->
 
+    <input id="myInput" onkeyup="myFunction()" style="width:50%; margin-left:25%; margin-right:25%; margin-bottom:30px; border-radius: 40px; padding:11px" placeholder="Search by Name">
 
     <div style="margin-left:30%; margin-right:30%">
-        <table class="compat" style="width:100%; background-color: #ECDAD4">
+        <table id="myTable" class="compat" style="width:100%; background-color: #ECDAD4">
             <thead>
             <tr class="compat" style="background-color: #CCB9B1">
                 <th class="compat">Game Name</th>
@@ -141,12 +187,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="compat" ng-repeat="entry in data | filter: filterEntries(field)">
-                    <td class="compat" align="left"><a class="texts" href="{{entry.html_url}}"><small>{{entry.title}}</small></a></td>
-                    <td class="compat" bgcolor="{{entry.color}}"><font color="white"><b style="font-family:cursive; letter-spacing: 1px; color: black">{{texts[entry.status]}}</b></font></td>
+            <tr id="tr" class="compat" ng-repeat="entry in data | filter: filterEntries(field)">
+                    <td id="td" class="compat" align="left"><a class="texts" href="{{entry.html_url}}"><small>{{entry.title}}</small></a></td>
+                    <td id="td" class="compat" bgcolor="{{entry.color}}"><font color="white"><b style="font-family:cursive; letter-spacing: 1px; color: black">{{texts[entry.status]}}</b></font></td>
             </tr>
             </tbody>
         </table>
     </div>
+    
 </body>
 </html>
