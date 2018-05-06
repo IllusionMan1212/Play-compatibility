@@ -5,11 +5,23 @@
     <title>Play! Compatibility</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        table, tr, td, th
+        .compat
         {
             border-collapse: collapse;
             border: 1px solid black;
             text-align: left;
+            padding: 5px;
+        }
+        .texts{
+            text-decoration: none;
+            color: black;
+            font-family:cursive;
+            letter-spacing: 1px;
+            font-weight: 900;
+            font-size:120%
+        }
+        .texts:hover{
+            text-decoration: underline;
         }
     </style>
 
@@ -18,7 +30,7 @@
     <script src="texts.js"></script>
     
 </head>
-<body id="page-top" ng-controller="angularController">
+<body id="page-top" ng-controller="angularController" style="margin:0px">
         <script>
                 function get(name) {
                     if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))
@@ -107,18 +119,31 @@
                     }
                 })
             </script>
-    <div style="margin-left:25%; margin-right:25%">
-        <table style="width:100%">
+
+        <table style="width:100%; padding:0px; margin-bottom:100px; border-collapse:collapse;border:0px">
+            <tbody>
+                <tr>
+                    <td style="padding:0px 0px 0px 0px;width:148px; height:30px; background-image: url(img/play-left.png)"></td>
+                    <td style="padding:0px 0px 0px 0px;background-image: url(img/play-center.png)"></td>
+                    <td style="padding:0px 0px 0px 0px;background-image:url(img/play-right.png); width:57px;height:62px"></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+    <div style="margin-left:30%; margin-right:30%">
+        <table class="compat" style="width:100%; background-color: #ECDAD4">
             <thead>
-            <tr>
-                <td>Game Name</td>
-                <td>Status</td>
+            <tr class="compat" style="background-color: #CCB9B1">
+                <th class="compat">Game Name</th>
+                <th class="compat">Status</th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="entry in data | filter: filterEntries(field)">
-                    <td align="left"><a href="{{entry.html_url}}"><small>{{entry.title}}</small></a></td>
-                    <td bgcolor="{{entry.color}}"><font color="white"><small>{{texts[entry.status]}}</small></font></td>
+            <tr class="compat" ng-repeat="entry in data | filter: filterEntries(field)">
+                    <td class="compat" align="left"><a class="texts" href="{{entry.html_url}}"><small>{{entry.title}}</small></a></td>
+                    <td class="compat" bgcolor="{{entry.color}}"><font color="white"><b style="font-family:cursive; letter-spacing: 1px; color: black">{{texts[entry.status]}}</b></font></td>
             </tr>
             </tbody>
         </table>
