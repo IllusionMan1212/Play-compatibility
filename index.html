@@ -5,27 +5,7 @@
     <title>Play! Compatibility</title>
     <link rel="icon" href="favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .compat
-        {
-            border-collapse: collapse;
-            border: 1px solid black;
-            text-align: left;
-            padding: 5px;
-        }
-        .texts{
-            text-decoration: none;
-            color: black;
-            font-family:cursive;
-            letter-spacing: 1px;
-            font-weight: 900;
-            font-size:120%
-        }
-        .texts:hover{
-            text-decoration: underline;
-        }
-    </style>
-
+    <link rel="stylesheet" href="css/creative.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.min.js"></script>
 
     <script src="texts.js"></script>
@@ -124,9 +104,9 @@
         <table style="width:100%; padding:0px; margin-bottom:100px; border-collapse:collapse;border:0px">
             <tbody>
                 <tr>
-                    <td style="padding:0px 0px 0px 0px;background-image: url(img/play-left.png); width:148px; height:30px"></td>
-                    <td style="padding:0px 0px 0px 0px;background-image: url(img/play-center.png)"></td>
-                    <td style="padding:0px 0px 0px 0px;background-image: url(img/play-right.png); width:57px;height:62px"></td>
+                    <td id="nav-left"></td>
+                    <td id="nav-center"></td>
+                    <td id="nav-right"></td>
                 </tr>
             </tbody>
         </table>
@@ -173,14 +153,14 @@
                 </script>
                 <!-- Search bar for searching using Status-->
 
-    <input id="myInput2" onkeyup="myFunction2()" style="width:50%; margin-left:25%; margin-right:20%; margin-bottom:15px; border-radius: 40px; padding:11px" placeholder="Search by Status">
+    <input id="myInput2" class="search" onkeyup="myFunction2()" placeholder="Search by Status">
                 
                 <!-- Search bar for searching using Names-->
 
-    <input id="myInput" onkeyup="myFunction()" style="width:50%; margin-left:25%; margin-right:20%; margin-bottom:30px; border-radius: 40px; padding:11px" placeholder="Search by Name">
+    <input id="myInput" class="search" onkeyup="myFunction()" placeholder="Search by Name">
 
-    <div style="margin-left:20%; margin-right:20%">
-        <table id="myTable" class="compat" style="width:100%; background-color: #ECDAD4">
+    <div style="margin-left:30%; margin-right:30%">
+        <table id="myTable" class="compat" style="background-color: #ECDAD4">
             <thead>
             <tr class="compat" style="background-color: #CCB9B1">
                 <th class="compat">Game Name</th>
