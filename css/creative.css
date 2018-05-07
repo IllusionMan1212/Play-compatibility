@@ -1,6 +1,6 @@
 .header{
     text-align:center;
-    font-family:cursive;
+    font-family:Microsoft JhengHei UI Light;
     margin-bottom:30px;
 }
 .table{
@@ -18,7 +18,7 @@
 .texts{
     text-decoration: none;
     color: black;
-    font-family:cursive;
+    font-family:Microsoft JhengHei UI Light;
     letter-spacing: 1px;
     font-weight: 900;
     font-size:120%
