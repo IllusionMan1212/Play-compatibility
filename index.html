@@ -45,7 +45,7 @@
                     var pagination = true
                     var page = 1
                     while (pagination) {
-                        if (page == 4) pagination = false
+                        if (page == 5) pagination = false
                         $http.get("https://api.github.com/repos/jpd002/play-compatibility/issues?state=open&page=" + page + "&per_page=100")
                             .success(function(data) {
         
