@@ -1,11 +1,27 @@
-.header{
+.header
+{
     text-align:center;
     font-family:Microsoft JhengHei UI Light;
     margin-bottom:30px;
 }
-.table{
+.footer
+{
+    position:fixed;
+    bottom:0;
+    text-align:center;
+    text-decoration:none;
+    font-family:'Courier New', Courier, monospace;
+    margin:30px;
+}
+.footer a
+{
+    text-decoration:none;
+}
+.table
+{
     margin-left:30%;
     margin-right:30%;
+    margin-bottom:40px;
 }
 .compat
 {
@@ -15,7 +31,8 @@
     padding: 5px;
     width: 100%;
 }
-.texts{
+.texts
+{
     text-decoration: none;
     color: black;
     font-family:Microsoft JhengHei UI Light;
@@ -23,36 +40,52 @@
     font-weight: 900;
     font-size:120%
 }
-.texts:hover{
+.texts:hover
+{
     text-decoration: underline;
 }
-#nav-left{
+#nav-left
+{
     padding: 0px 0px 0px 0px;
     width: 148px;
     height: 62px;
     background-image: url(../img/play-left.png);
 }
-#nav-center{
+#nav-center
+{
     padding: 0px 0px 0px 0px;
     background-image: url(../img/play-center.png);
 }
-#nav-right{
+#nav-right
+{
     padding: 0px 0px 0px 0px;
     width: 57px;
     height: 62px;
     background-image: url(../img/play-right.png);
 }
-.search{
+.search
+{
     width: 40%;
     margin-left: 29%;
     margin-bottom: 20px;
     border-radius: 40px;
     padding: 11px;
 }
-@media screen and (max-width: 720px){
-    .table{
+@media screen and (max-width: 800px)
+{
+    .footer
+    {
+        padding-top:10px;
+        margin:0;
+        height:30px;
+        left:0;
+        right:0;
+        background-color:white;
+    }
+    .table
+    {
         margin-left:10%;
         margin-right:10%;
     }
- 
+
 }
