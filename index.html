@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html ng-app="Play!">
+
 <head>
     <meta charset="utf-8" />
     <title>Play! Compatibility</title>
@@ -11,13 +12,13 @@
     <script src="texts.js"></script>
     
 </head>
+
 <body id="page-top" ng-controller="angularController" style="margin:0px">
         <script>
                 function get(name) {
                     if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))
                         return decodeURIComponent(name[1]);
                 }
-        
                 angular.module('Play!', []).controller("angularController", function($scope, $http, $filter) {
                     $scope.views = []
                     $scope.views.push([])
@@ -39,9 +40,6 @@
                     $scope.lang = "en"
                 }
             }
-        
-                
-        
                     var pagination = true
                     var page = 1
                     while (pagination) {
@@ -86,11 +84,6 @@
                             });
                         page++
                     }
-        
-                   
-        
-                  
-        
                     // Angular filter
                     $scope.filterEntries = function(val) {
                         return function(entry) {
@@ -115,9 +108,18 @@
             <h1 class="header">Unofficial Compatibility Page For Play!</h1>
         </div>
         
-        <!-- Script for searching using Names-->
         <script>
-                function myFunction() {
+        function Search() {
+            Name = document.getElementById("radio");
+            Status = document.getElementById("radio1");
+            if (Name.checked) {
+                searchByName();
+            } else if (Status.checked) {
+                searchByStatus();
+            }
+        };
+      
+        function searchByName() {
                   var input, filter, table, tr, td, i;
                   input = document.getElementById("myInput");
                   filter = input.value.toUpperCase();
@@ -133,13 +135,11 @@
                       }
                     }       
                   }
-                }
-        </script>
-        <!-- Script for searching using Status -->
-                <script>
-                        function myFunction2() {
+          };
+              
+        function searchByStatus() {
                           var input, filter, table, tr, td, i;
-                          input = document.getElementById("myInput2");
+            input = document.getElementById("myInput");
                           filter = input.value.toUpperCase();
                           table = document.getElementById("myTable");
                           tr = table.getElementsByTagName("tr");
@@ -153,16 +153,18 @@
                               }
                             }       
                           }
-                        }
+                  };
                 </script>
-                <!-- Search bar for searching using Status-->
 
-    <input id="myInput2" class="search" onkeyup="myFunction2()" placeholder="Search by Status">
-                
-                <!-- Search bar for searching using Names-->
-
-    <input id="myInput" class="search" onkeyup="myFunction()" placeholder="Search by Name">
-
+    <div>
+      <input id="myInput" class="search" onkeyup="Search()" placeholder=" Search">
+    </div>
+    <div class="radios">
+    <input id="radio" type="radio" name="radios" checked>
+    <label for="radio">Search By Name</label>
+    <input id="radio1" type="radio" name="radios">
+    <label for="radio1">Search By Status</label>
+    </div>
     <div class="table">
         <table id="myTable" class="compat" style="background-color: #ECDAD4">
             <thead>
@@ -185,4 +187,5 @@
         </div>
     </footer>
 </body>
+
 </html>
