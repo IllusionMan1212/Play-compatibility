@@ -6,33 +6,35 @@
     <title>Play! Compatibility</title>
     <link rel="icon" href="favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="css/creative.css">
+    <link id="styles" rel="stylesheet" href="css/creative.css">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.11/angular.min.js"></script>
 
-    <script src="texts.js"></script>
-    
+    <script src="js/texts.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/search.js"></script>
+
 </head>
 
 <body id="page-top" ng-controller="angularController" style="margin:0px">
-        <script>
-                function get(name) {
-                    if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))
-                        return decodeURIComponent(name[1]);
-                }
-                angular.module('Play!', []).controller("angularController", function($scope, $http, $filter) {
-                    $scope.views = []
-                    $scope.views.push([])
-                    $scope.views.push([])
-                    $scope.views.push([])
-                    $scope.views.push([])
-                    $scope.views.push([])
-                    $scope.views.push([])
-        
-                    var lang = get('lang');
+    <script>
+        function get(name) {
+            if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))
+                return decodeURIComponent(name[1]);
+        }
+        angular.module('Play!', []).controller("angularController", function($scope, $http, $filter) {
+            $scope.views = []
+            $scope.views.push([])
+            $scope.views.push([])
+            $scope.views.push([])
+            $scope.views.push([])
+            $scope.views.push([])
+            $scope.views.push([])
+
+            var lang = get('lang');
             if (lang == "en") {
                 $scope.texts = texts[0]
                 $scope.lang = "en"
-           
+
             } else {
                 var lang = window.navigator.language || window.navigator.userLanguage;
                 if (lang.startsWith('en')) {
@@ -40,144 +42,100 @@
                     $scope.lang = "en"
                 }
             }
-                    var pagination = true
-                    var page = 1
-                    while (pagination) {
-                        if (page == 6) pagination = false
-                        $http.get("https://api.github.com/repos/jpd002/play-compatibility/issues?state=open&page=" + page + "&per_page=100")
-                            .success(function(data) {
-        
-                                var i = 0,
-                                    j = 0
-                                for (i = 0; i < data.length; i++) {
-                                    data[i].status = 0
-                                    data[i].color = "000000"
-                                    for (j = 0; j < data[i].labels.length; j++) {
-                                        if (data[i].labels[j].name == "state-nothing") { // Fatal label, breaking recursion
-                                            data[i].color = data[i].labels[j].color
-                                            data[i].status = 1
-                                            break;
-                                        } else if (data[i].labels[j].name == "state-playable") {
-                                            data[i].color = data[i].labels[j].color
-                                            data[i].status = 4
-                                        } else if (data[i].labels[j].name =="state-loadable") {
-                                            data[i].color = data[i].labels[j].color
-                                            data[i].status = 2
-                                        } else if (data[i].labels[j].name == "state-intro") {
-                                            data[i].color = data[i].labels[j].color
-                                            data[i].status = 3
-                                        } else if (data[i].labels[j].name == "state-ingame") {
-                                            data[i].color = data[i].labels[j].color
-                                            data[i].status = 5
-                                        }
-                                    }
-                                    if (data[i].status > 0) {
-                                        $scope.views[data[i].status].push(data[i])
-                                    }
-                                    $scope.views[0].push(data[i])
-                                    $scope.data = $scope.views[0];
-                                    $scope.data = $filter('orderBy')($scope.data, 'title', false);
+            var pagination = true
+            var page = 1
+            while (pagination) {
+                if (page == 6) pagination = false
+                $http.get("https://api.github.com/repos/jpd002/play-compatibility/issues?state=open&page=" + page + "&per_page=100")
+                    .success(function(data) {
+
+                        var i = 0,
+                            j = 0
+                        for (i = 0; i < data.length; i++) {
+                            data[i].status = 0
+                            data[i].color = "000000"
+                            for (j = 0; j < data[i].labels.length; j++) {
+                                if (data[i].labels[j].name == "state-nothing") { // Fatal label, breaking recursion
+                                    data[i].color = data[i].labels[j].color
+                                    data[i].status = 1
+                                    break;
+                                } else if (data[i].labels[j].name == "state-playable") {
+                                    data[i].color = data[i].labels[j].color
+                                    data[i].status = 4
+                                } else if (data[i].labels[j].name == "state-loadable") {
+                                    data[i].color = data[i].labels[j].color
+                                    data[i].status = 2
+                                } else if (data[i].labels[j].name == "state-intro") {
+                                    data[i].color = data[i].labels[j].color
+                                    data[i].status = 3
+                                } else if (data[i].labels[j].name == "state-ingame") {
+                                    data[i].color = data[i].labels[j].color
+                                    data[i].status = 5
                                 }
-                            })
-                            .error(function() {
-                                pagination = false;
-                            });
-                        page++
-                    }
-                    // Angular filter
-                    $scope.filterEntries = function(val) {
-                        return function(entry) {
-                            if (val == undefined) return true;
-                            return (entry.title.toLowerCase().indexOf(val.toLowerCase() || '') !== -1);
+                            }
+                            if (data[i].status > 0) {
+                                $scope.views[data[i].status].push(data[i])
+                            }
+                            $scope.views[0].push(data[i])
+                            $scope.data = $scope.views[0];
+                            $scope.data = $filter('orderBy')($scope.data, 'title', false);
                         }
-                    }
-                })
-            </script>
-
-        <table style="width:100%; padding:0px; margin-bottom:50px; border-collapse:collapse;border:0px">
-            <tbody>
-                <tr>
-                    <td id="nav-left"></td>
-                    <td id="nav-center"></td>
-                    <td id="nav-right"></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div>
-            <h1 class="header">Unofficial Compatibility Page For Play!</h1>
-        </div>
-        
-        <script>
-        function Search() {
-            Name = document.getElementById("radio");
-            Status = document.getElementById("radio1");
-            if (Name.checked) {
-                searchByName();
-            } else if (Status.checked) {
-                searchByStatus();
+                    })
+                    .error(function() {
+                        pagination = false;
+                    });
+                page++
             }
-        };
-      
-        function searchByName() {
-            var input, filter, table, tr, td, i;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("myTable");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[0];
-                if (td) {
-                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                        } else {
-                            tr[i].style.display = "none";
-                            }
-                        }       
-                    }
-                };
-     
-        function searchByStatus() {
-            var input, filter, table, tr, td, i;
-            input = document.getElementById("myInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("myTable");
-            tr = table.getElementsByTagName("tr");
-            for (i = 0; i < tr.length; i++) {
-                td = tr[i].getElementsByTagName("td")[1];
-                if (td) {
-                    if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
-                        tr[i].style.display = "";
-                        } else {
-                            tr[i].style.display = "none";
-                            }
-                        }       
-                    }
-                };
-        </script>
+            // Angular filter
+            $scope.filterEntries = function (val) {
+                return function (entry) {
+                    if (val == undefined) return true;
+                    return (entry.title.toLowerCase().indexOf(val.toLowerCase() || '') !== -1);
+                }
+            }
+        })
+    </script>
+
+    <table style="width:100%; padding:0px; margin-bottom:50px; border-collapse:collapse;border:0px">
+        <tbody>
+            <tr>
+                <td id="nav-left"></td>
+                <td id="nav-center"></td>
+                <td id="nav-right"></td>
+            </tr>
+        </tbody>
+    </table>
 
     <div>
-      <input id="myInput" class="search" onkeyup="Search()" placeholder=" Search">
+        <button id="btn" class="themebtn" onclick="ChangeTheme()">Dark Theme</button>
+    </div>
+
+    <div>
+        <h1 class="header">Unofficial Compatibility Page For Play!</h1>
+    </div>
+
+    <div>
+        <input id="myInput" class="search" onkeyup="Search()" placeholder=" Search">
     </div>
     <div class="radios">
-    <input id="radio" type="radio" name="radios" checked>
-    <label for="radio">By Name</label>
-    <input id="radio1" type="radio" name="radios">
-    <label for="radio1">By Status</label>
+        <input id="radio" type="radio" name="radios" checked>
+        <label for="radio">By Name</label>
+        <input id="radio1" type="radio" name="radios">
+        <label for="radio1">By Status</label>
     </div>
     <div class="table">
         <table id="myTable" class="compat" style="background-color: #ECDAD4">
             <thead>
-            <tr class="compat" style="background-color: #CCB9B1">
-                <th class="compat">Game Name</th>
-                <th class="compat">Status</th>
-            </tr>
+                <tr class="compat" style="background-color: #CCB9B1">
+                    <th class="compat">Game Name</th>
+                    <th class="compat">Status</th>
+                </tr>
             </thead>
             <tbody>
-            <tr id="tr" class="compat" ng-repeat="entry in data | filter: filterEntries(field)">
+                <tr id="tr" class="compat" ng-repeat="entry in data | filter: filterEntries(field)">
                     <td id="td" class="compat" align="left"><a class="texts" href="{{entry.html_url}}"><small>{{entry.title}}</small></a></td>
                     <td id="td" class="compat" bgcolor="{{entry.color}}"><b style="font-family:Microsoft JhengHei UI Light; letter-spacing: 1px">{{texts[entry.status]}}</b></td>
-            </tr>
+                </tr>
             </tbody>
         </table>
     </div>
