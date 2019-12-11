@@ -21,7 +21,7 @@
             if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))
                 return decodeURIComponent(name[1]);
         }
-        angular.module('Play!', []).controller("angularController", function($scope, $http, $filter) {
+        angular.module('Play!', []).controller("angularController", async function($scope, $http, $filter) {
             $scope.views = []
             $scope.views.push([])
             $scope.views.push([])
@@ -29,23 +29,19 @@
             $scope.views.push([])
             $scope.views.push([])
             $scope.views.push([])
+            $scope.texts = texts[0];
 
-            var lang = get('lang');
-            if (lang == "en") {
-                $scope.texts = texts[0]
-                $scope.lang = "en"
+            var numberOfPages = 0;
+            await $http.get("https://api.github.com/repos/jpd002/play-compatibility")
+            .success(function(json) {
+                var numberOfEntries = json.open_issues_count;
+                numberOfPages = Math.ceil(numberOfEntries / 100);
+            });
 
-            } else {
-                var lang = window.navigator.language || window.navigator.userLanguage;
-                if (lang.startsWith('en')) {
-                    $scope.texts = texts[0]
-                    $scope.lang = "en"
-                }
-            }
             var pagination = true
             var page = 1
             while (pagination) {
-                if (page == 6) pagination = false
+                if (page == numberOfPages) pagination = false
                 $http.get("https://api.github.com/repos/jpd002/play-compatibility/issues?state=open&page=" + page + "&per_page=100")
                     .success(function(data) {
 
@@ -86,13 +82,6 @@
                     });
                 page++
             }
-            // Angular filter
-            $scope.filterEntries = function (val) {
-                return function (entry) {
-                    if (val == undefined) return true;
-                    return (entry.title.toLowerCase().indexOf(val.toLowerCase() || '') !== -1);
-                }
-            }
         })
     </script>
 
@@ -132,7 +121,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr id="tr" class="compat" ng-repeat="entry in data | filter: filterEntries(field)">
+                <tr id="tr" class="compat" ng-repeat="entry in data">
                     <td id="td" class="compat" align="left"><a class="texts" href="{{entry.html_url}}"><small>{{entry.title}}</small></a></td>
                     <td id="td" class="compat" bgcolor="{{entry.color}}"><b style="font-family:Microsoft JhengHei UI Light; letter-spacing: 1px">{{texts[entry.status]}}</b></td>
                 </tr>
