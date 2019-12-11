@@ -22,7 +22,7 @@ function searchByName() {
                 } else {
                     tr[i].style.display = "none";
                     }
-                }       
+                }
             }
         };
 
@@ -40,6 +40,6 @@ function searchByStatus() {
                 } else {
                     tr[i].style.display = "none";
                     }
-                }       
+                }
             }
         };
